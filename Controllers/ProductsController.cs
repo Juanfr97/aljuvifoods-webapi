@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aljuvifoods_webapi.Models;
 using aljuvifoods_webapi.Repository;
+using aljuvifoods_webapi.DTOs.Product;
+using AutoMapper;
 
 namespace aljuvifoods_webapi.Controllers
 {
@@ -16,10 +18,12 @@ namespace aljuvifoods_webapi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context,IMapper mapper)
         {
             _context = context;
+            this.mapper = mapper;
         }
 
         // GET: api/Products
@@ -77,8 +81,9 @@ namespace aljuvifoods_webapi.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(ProductCDTO productCDTO)
         {
+            var product = mapper.Map<Product>(productCDTO);
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 

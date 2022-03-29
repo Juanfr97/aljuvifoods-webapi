@@ -11,7 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("defaultConnection")));
-builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(opt => 
+
+    {
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

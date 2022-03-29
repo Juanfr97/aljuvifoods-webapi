@@ -30,7 +30,7 @@ namespace aljuvifoods_webapi.Controllers
                 return NotFound();
             var isValidPassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
             if (isValidPassword)
-                return Ok( new LoginDTO() { isLogged = true, Role = user.UserRole.Description });
+                return Ok( new LoginDTO() { isLogged = true, Role = user.UserRole.Description,UserId=user.UserId });
 
             else
             return BadRequest("Password is not valid");

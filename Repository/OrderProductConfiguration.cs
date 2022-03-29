@@ -13,6 +13,8 @@ namespace aljuvifoods_webapi.Repository
 
             builder.HasIndex(x => x.ProductId).HasDatabaseName("UI_ProductId").IsUnique();
             builder.HasOne(typeof(Product)).WithMany().OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }
