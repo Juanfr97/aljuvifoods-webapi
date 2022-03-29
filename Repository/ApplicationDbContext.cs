@@ -15,5 +15,12 @@ namespace aljuvifoods_webapi.Repository
 
         public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
+
+        //Config
+        protected override void OnModelCreating(ModelBuilder model)
+        {
+            model.ApplyConfiguration(new OrderProductConfiguration());
+        }
+
     }
 }

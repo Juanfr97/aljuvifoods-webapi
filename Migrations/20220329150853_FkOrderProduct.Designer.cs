@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using aljuvifoods_webapi.Repository;
 
@@ -11,9 +12,10 @@ using aljuvifoods_webapi.Repository;
 namespace aljuvifoods_webapi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220329150853_FkOrderProduct")]
+    partial class FkOrderProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,48 +26,28 @@ namespace aljuvifoods_webapi.Migrations
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.Category", b =>
                 {
-<<<<<<< HEAD
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-=======
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-                    b.HasKey("Id");
-=======
                     b.HasKey("CategoryId");
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
 
                     b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.Order", b =>
                 {
-<<<<<<< HEAD
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
-=======
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -76,19 +58,13 @@ namespace aljuvifoods_webapi.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-                    b.HasKey("OrderId");
-=======
                     b.HasKey("Id");
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -122,7 +98,6 @@ namespace aljuvifoods_webapi.Migrations
                     b.ToTable("OrderProducts");
                 });
 
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -222,8 +197,6 @@ namespace aljuvifoods_webapi.Migrations
                     b.Navigation("OrderUser");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
                     b.HasOne("aljuvifoods_webapi.Models.Order", null)
@@ -239,7 +212,6 @@ namespace aljuvifoods_webapi.Migrations
                         .IsRequired();
                 });
 
->>>>>>> 03070252873a0039a0f982c1177556df01f192be
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
                     b.HasOne("aljuvifoods_webapi.Models.Category", "ProductCategory")
