@@ -110,5 +110,22 @@ namespace aljuvifoods_webapi.Controllers
         {
             return _context.Products.Any(e => e.ProductId == id);
         }
+
+        [HttpGet("description")]
+        public async Task<IActionResult> GetByDescription(string description)
+        {
+            var des = await _context.Products.Where(x => x.Description == description).ToListAsync();
+            if (des == null)
+                return NotFound();
+            return Ok(des);
+        }
+        [HttpGet("categoryId")]
+        public async Task<IActionResult> GetByDescription(int categoryId)
+        {
+            var des = await _context.Categories.Where(x => x.Id == categoryId).ToListAsync();
+            if (des == null)
+                return NotFound();
+            return Ok(des);
+        }
     }
 }
