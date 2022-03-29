@@ -26,14 +26,11 @@ namespace aljuvifoods_webapi.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
         }
-
-        // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -47,8 +44,6 @@ namespace aljuvifoods_webapi.Controllers
             return product;
         }
 
-        // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
@@ -78,8 +73,6 @@ namespace aljuvifoods_webapi.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(ProductCDTO productCDTO)
         {
@@ -90,7 +83,6 @@ namespace aljuvifoods_webapi.Controllers
             return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
         }
 
-        // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -122,10 +114,10 @@ namespace aljuvifoods_webapi.Controllers
         [HttpGet("categoryId")]
         public async Task<IActionResult> GetByDescription(int categoryId)
         {
-            var des = await _context.Categories.Where(x => x.Id == categoryId).ToListAsync();
-            if (des == null)
+            var category = await _context.Categories.Where(x => x.Id == categoryId).ToListAsync();
+            if (category == null)
                 return NotFound();
-            return Ok(des);
+            return Ok(category);
         }
     }
 }
