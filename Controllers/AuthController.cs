@@ -25,15 +25,15 @@ namespace aljuvifoods_webapi.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginDTO>> UserLogin(LoginCDTO login)
         {
-            var user = await context.Users.Include(x=>x.UserRole).FirstOrDefaultAsync(u => u.Email == login.Email);
-            if(user == null)
+            var user = await context.Users.Include(x => x.UserRole).FirstOrDefaultAsync(u => u.Email == login.Email);
+            if (user == null)
                 return NotFound();
             var isValidPassword = BCrypt.Net.BCrypt.Verify(login.Password, user.Password);
             if (isValidPassword)
-                return Ok( new LoginDTO() { isLogged = true, Role = user.UserRole.Description,UserId=user.UserId });
+                return Ok(new LoginDTO() { isLogged = true, Role = user.UserRole.Description, UserId = user.UserId });
 
             else
-            return BadRequest("Password is not valid");
+                return BadRequest("Password is not valid");
         }
 
         [HttpPost("register")]
@@ -49,5 +49,47 @@ namespace aljuvifoods_webapi.Controllers
             await context.SaveChangesAsync();
             return Ok();
         }
+        [HttpGet("Usuarios")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            return await context.Users.ToListAsync();
+
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetDetails(int id)
+        {
+            var us = await context.Users.FindAsync(id);
+            if (us == null)
+            {
+                return NotFound();
+            }
+            return Ok(us);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutSongs(User us, int id)
+        {
+            if (id != us.UserId)
+            {
+                return BadRequest();
+            }
+            context.Entry(us).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return Ok(us);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUsers(int id)
+        {
+            var us = await context.Users.FindAsync(id);
+
+            if (us == null)
+            {
+                return NotFound();
+            }
+            context.Users.Remove(us);
+            await context.SaveChangesAsync();
+
+            return Ok(us);
+        }
     }
+    
 }

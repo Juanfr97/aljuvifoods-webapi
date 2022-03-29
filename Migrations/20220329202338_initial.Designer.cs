@@ -12,8 +12,8 @@ using aljuvifoods_webapi.Repository;
 namespace aljuvifoods_webapi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220329200600_Initial")]
-    partial class Initial
+    [Migration("20220329202338_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
