@@ -35,32 +35,28 @@ namespace aljuvifoods_webapi.Controllers
         {
             try
             {
-                var transaction = context.Database.BeginTransaction();
                 var order = mapper.Map<Order>(orderCDTO);
-
                 context.Add(order);
                 await context.SaveChangesAsync();
-               
-
-                var orderProducts = new List<OrderProduct>();
-                if(orderCDTO.Products != null)
-                {
-                    foreach (var orderProduct in orderCDTO.Products)
-                    {
-                        orderProducts.Add(new OrderProduct()
-                        {
-                            ProductId = orderProduct.ProductId,
-                            OrderId = order.Id,
-                            Amount = orderProduct.Amount,
-                            Total = orderProduct.Total,
-                        });
-                    }
-                    context.AddRange(orderProducts);
+                //var orderProducts = new List<OrderProduct>();
+                //if(orderCDTO.Products != null)
+                //{
+                //    foreach (var orderProduct in orderCDTO.Products)
+                //    {
+                //        orderProducts.Add(new OrderProduct()
+                //        {
+                //            ProductId = orderProduct.ProductId,
+                //            OrderId = order.Id,
+                //            Amount = orderProduct.Amount,
+                //            Total = orderProduct.Total,
+                //        });
+                //    }
+                //    context.AddRange(orderProducts);
                     
 
-                }
-                await context.SaveChangesAsync();
-                transaction.Commit();
+                //}
+                //await context.SaveChangesAsync();
+                //transaction.Commit();
                 return Ok();
 
             }

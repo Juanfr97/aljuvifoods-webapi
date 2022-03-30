@@ -54,7 +54,7 @@ namespace aljuvifoods_webapi.Controllers
         [HttpGet("Usuarios")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await context.Users.ToListAsync();
+            return await context.Users.Include(u => u.UserRole).ToListAsync();
 
         }
         [HttpGet("{id}")]

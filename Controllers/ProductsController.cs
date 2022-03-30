@@ -27,9 +27,21 @@ namespace aljuvifoods_webapi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<ResponseProduct>> GetProducts([FromQuery]int categoryId)
         {
-            return await _context.Products.ToListAsync();
+            var response = new ResponseProduct();
+            if(categoryId == 0)
+            {
+                response.Products = await _context.Products.ToListAsync();
+                response.Total=response.Products.Count;
+                return response;
+            }
+                
+
+            var Products = await _context.Products.Where(p=>p.CategoryId == categoryId).ToListAsync();
+            response.Products = Products;
+            response.Total=Products.Count;
+            return response;
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
