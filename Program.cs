@@ -1,3 +1,4 @@
+
 using aljuvifoods_webapi.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +23,6 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => 
-
     {
         opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
     });
