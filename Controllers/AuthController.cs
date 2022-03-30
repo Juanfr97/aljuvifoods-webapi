@@ -43,11 +43,13 @@ namespace aljuvifoods_webapi.Controllers
             if (userExists)
                 return BadRequest("User already exists");
             var userCDTO = mapper.Map<User>(user);
+            
             userCDTO.RoleId = 2;
             userCDTO.Password = BCrypt.Net.BCrypt.HashPassword(userCDTO.Password);
             context.Users.Add(userCDTO);
             await context.SaveChangesAsync();
-            return Ok();
+            var newUser = await context.Users.Include(u=>u.UserRole).FirstOrDefaultAsync(u=>u.Email==user.Email);
+            return Ok(new LoginDTO() { isLogged = true, Role = newUser.UserRole.Description, UserId = newUser.UserId });
         }
     }
 }
