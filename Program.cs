@@ -1,3 +1,4 @@
+
 using aljuvifoods_webapi.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<ApplicationDbContext>(opt => 
-
     {
         opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
     });
