@@ -12,6 +12,7 @@ namespace aljuvifoods_webapi.Repository
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
+<<<<<<< HEAD
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -25,6 +26,11 @@ namespace aljuvifoods_webapi.Repository
             //model.Entity<Order>().HasMany(o => o.Products).WithOne(o => o.order);
             
         }
+=======
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Product> Products { get; set; }
+
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
 
     }
 }

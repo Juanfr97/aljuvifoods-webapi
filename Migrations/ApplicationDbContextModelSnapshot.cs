@@ -63,6 +63,7 @@ namespace aljuvifoods_webapi.Migrations
                     b.ToTable("Orders");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
                     b.Property<int>("Id")
@@ -92,13 +93,15 @@ namespace aljuvifoods_webapi.Migrations
                     b.ToTable("OrderProducts");
                 });
 
+=======
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -107,10 +110,14 @@ namespace aljuvifoods_webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -191,6 +198,7 @@ namespace aljuvifoods_webapi.Migrations
                     b.Navigation("OrderUser");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
                     b.HasOne("aljuvifoods_webapi.Models.Order", null)
@@ -208,6 +216,8 @@ namespace aljuvifoods_webapi.Migrations
                     b.Navigation("Product");
                 });
 
+=======
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
                     b.HasOne("aljuvifoods_webapi.Models.Category", "ProductCategory")
@@ -228,11 +238,6 @@ namespace aljuvifoods_webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("UserRole");
-                });
-
-            modelBuilder.Entity("aljuvifoods_webapi.Models.Order", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

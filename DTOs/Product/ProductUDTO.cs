@@ -1,12 +1,10 @@
-﻿namespace aljuvifoods_webapi.Models
+﻿namespace aljuvifoods_webapi.DTOs.Product
 {
-    public class Product
+    public class ProductUDTO
     {
-        public int Id { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public double Price { get; set; }
         public int CategoryId { get; set; }
-        public Category ProductCategory { get; set; }
     }
 }

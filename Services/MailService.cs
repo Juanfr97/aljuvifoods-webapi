@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 ﻿
 using aljuvifoods_webapi.Services.Contracts;
+=======
+﻿using aljuvifoods_webapi.Services.Contracts;
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
 using System.Net;
 using System.Net.Mail;
 
 namespace aljuvifoods_webapi.Services
 {
+<<<<<<< HEAD
     public abstract class MailService : IMailService
+=======
+    public abstract class MailService:IMailService
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
     {
         private SmtpClient smtpClient { get; set; }
         protected string senderMail { get; set; }
@@ -35,7 +43,11 @@ namespace aljuvifoods_webapi.Services
                 }
                 msg.Subject = subject;
                 msg.Body = body;
+<<<<<<< HEAD
                 msg.Priority=MailPriority.Normal;
+=======
+                msg.Priority = MailPriority.Normal;
+>>>>>>> 472945196e9027f2fbb455d22a313e79d309d38d
                 smtpClient.Send(msg);
             }
             catch (Exception ex) { }

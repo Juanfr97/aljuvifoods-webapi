@@ -27,9 +27,21 @@ namespace aljuvifoods_webapi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<ResponseProduct>> GetProducts([FromQuery]int categoryId)
         {
-            return await _context.Products.ToListAsync();
+            var response = new ResponseProduct();
+            if(categoryId == 0)
+            {
+                response.Products = await _context.Products.Include(p=>p.ProductCategory).ToListAsync();
+                response.Total=response.Products.Count;
+                return response;
+            }
+                
+
+            var Products = await _context.Products.Where(p=>p.CategoryId == categoryId).ToListAsync();
+            response.Products = Products;
+            response.Total=Products.Count;
+            return response;
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
@@ -45,32 +57,17 @@ namespace aljuvifoods_webapi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<ActionResult> PutProduct(int id, ProductUDTO updateProduct)
         {
-            if (id != product.ProductId)
-            {
-                return BadRequest();
-            }
-
+            var productHelper = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if(productHelper == null)
+                return NotFound();
+            //context.SystemUser.Update(newUser);
+            var product = mapper.Map<Product>(updateProduct);
+            product.Id = id;
             _context.Entry(product).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            await _context.SaveChangesAsync();
+            return Ok(product);
         }
 
         [HttpPost]
@@ -80,7 +77,7 @@ namespace aljuvifoods_webapi.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
         [HttpDelete("{id}")]
@@ -100,7 +97,7 @@ namespace aljuvifoods_webapi.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            return _context.Products.Any(e => e.Id == id);
         }
 
         [HttpGet("description")]

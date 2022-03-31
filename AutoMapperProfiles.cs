@@ -1,5 +1,4 @@
 ﻿using aljuvifoods_webapi.DTOs.Order;
-using aljuvifoods_webapi.DTOs.OrderProduct;
 using aljuvifoods_webapi.DTOs.Product;
 using aljuvifoods_webapi.DTOs.User;
 using aljuvifoods_webapi.Models;
@@ -17,8 +16,8 @@ namespace aljuvifoods_webapi
             CreateMap<Product, ProductCDTO>();
             CreateMap<ProductCDTO, Product>();
 
-            CreateMap<OrderProduct, OrderProductCDTO>();
-            CreateMap<OrderProductCDTO, OrderProduct>();
+            CreateMap<Product, ProductUDTO>();
+            CreateMap<ProductUDTO, Product>();
 
             CreateMap<Order, OrderCDTO>();
             CreateMap<OrderCDTO, Order>();
