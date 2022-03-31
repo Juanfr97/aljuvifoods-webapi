@@ -11,6 +11,6 @@ namespace aljuvifoods_webapi.Models
         public double Total { get; set; }
 
         public Product Product { get; set; }
-        public Order order { get; set; }
+        
     }
 }

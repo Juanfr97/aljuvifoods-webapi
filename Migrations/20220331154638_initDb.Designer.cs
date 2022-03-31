@@ -12,8 +12,8 @@ using aljuvifoods_webapi.Repository;
 namespace aljuvifoods_webapi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220329202338_initial")]
-    partial class initial
+    [Migration("20220331154638_initDb")]
+    partial class initDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,34 +67,31 @@ namespace aljuvifoods_webapi.Migrations
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId1")
-                        .HasColumnType("int");
-
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProduct");
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
@@ -198,15 +195,11 @@ namespace aljuvifoods_webapi.Migrations
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
                 {
-                    b.HasOne("aljuvifoods_webapi.Models.Order", "order")
-                        .WithOne()
-                        .HasForeignKey("aljuvifoods_webapi.Models.OrderProduct", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("aljuvifoods_webapi.Models.Order", null)
                         .WithMany("Products")
-                        .HasForeignKey("OrderId1");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("aljuvifoods_webapi.Models.Product", "Product")
                         .WithMany()
@@ -215,8 +208,6 @@ namespace aljuvifoods_webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-
-                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
