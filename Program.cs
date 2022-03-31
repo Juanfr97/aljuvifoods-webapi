@@ -1,5 +1,7 @@
 
+using aljuvifoods_webapi.DAO;
 using aljuvifoods_webapi.Repository;
+using aljuvifoods_webapi.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     {
         opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
     });
+
+builder.Services.AddScoped<IMailDao, UserMailDao>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
