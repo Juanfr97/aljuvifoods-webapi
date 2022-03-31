@@ -7,39 +7,42 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder.WithOrigins(new string[2] { "http://localhost:4200", "http://localhost:52921" })
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials());
 
+
+});
+builder.Services.AddMvc(m => m.EnableEndpointRouting = false);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("defaultConnection")));
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(
-      "CorsPolicy",
-      builder => builder.WithOrigins(new string[2] { "http://localhost:4200", "http://localhost:52921" })
-      .AllowAnyMethod()
-      .AllowAnyHeader()
-      .AllowCredentials());
-});
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => 
     {
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"));
+        opt.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")).EnableSensitiveDataLogging();
     });
 
 builder.Services.AddScoped<IMailDao, UserMailDao>();
 
 var app = builder.Build();
-
+app.UseCors("CorsPolicy");
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
+app.UseMvc();
 app.UseAuthorization();
-app.UseCors("CorsPolicy");
+
 app.MapControllers();
 
 app.Run();
