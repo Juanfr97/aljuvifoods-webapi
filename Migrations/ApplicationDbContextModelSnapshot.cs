@@ -63,45 +63,13 @@ namespace aljuvifoods_webapi.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId1")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("float");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.HasIndex("OrderId1");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderProduct");
-                });
-
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -117,7 +85,7 @@ namespace aljuvifoods_webapi.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
@@ -198,29 +166,6 @@ namespace aljuvifoods_webapi.Migrations
                     b.Navigation("OrderUser");
                 });
 
-            modelBuilder.Entity("aljuvifoods_webapi.Models.OrderProduct", b =>
-                {
-                    b.HasOne("aljuvifoods_webapi.Models.Order", "order")
-                        .WithOne()
-                        .HasForeignKey("aljuvifoods_webapi.Models.OrderProduct", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("aljuvifoods_webapi.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId1");
-
-                    b.HasOne("aljuvifoods_webapi.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("order");
-                });
-
             modelBuilder.Entity("aljuvifoods_webapi.Models.Product", b =>
                 {
                     b.HasOne("aljuvifoods_webapi.Models.Category", "ProductCategory")
@@ -241,11 +186,6 @@ namespace aljuvifoods_webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("UserRole");
-                });
-
-            modelBuilder.Entity("aljuvifoods_webapi.Models.Order", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

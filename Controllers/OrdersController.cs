@@ -25,8 +25,6 @@ namespace aljuvifoods_webapi.Controllers
         public async Task<ActionResult> GetAllOrders()
         {
             var orders = await context.Orders.Include(x => x.OrderUser)
-                                             .Include(x => x.Products)
-                                             .ThenInclude(products => products.Product)
                                              .ToListAsync();
             return Ok(orders);
         }

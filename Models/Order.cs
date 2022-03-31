@@ -7,6 +7,5 @@
         public double OrderTotal { get; set; }
         public DateTime OrderDate { get; set; }
         public User OrderUser { get; set; }
-        public List<OrderProduct> Products { get; set; }
     }
 }

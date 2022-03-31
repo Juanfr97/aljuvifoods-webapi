@@ -52,9 +52,14 @@ namespace aljuvifoods_webapi.Controllers
             return Ok(new LoginDTO() { isLogged = true, Role = newUser.UserRole.Description, UserId = newUser.UserId });
         }
         [HttpGet("Usuarios")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<ResponseUser>> GetUsers()
         {
-            return await context.Users.Include(u => u.UserRole).ToListAsync();
+            var users = await context.Users.Include(u => u.UserRole).ToListAsync();
+            var response = new ResponseUser();
+
+            response.Users = users;
+            response.Total = users.Count;
+            return response;
 
         }
         [HttpGet("{id}")]
@@ -68,13 +73,16 @@ namespace aljuvifoods_webapi.Controllers
             return Ok(us);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSongs(User us, int id)
+        public async Task<IActionResult> PutSongs(UserCDTO us, int id)
         {
-            if (id != us.UserId)
-            {
-                return BadRequest();
-            }
-            context.Entry(us).State = EntityState.Modified;
+            var userExists = await context.Users.AnyAsync(u => u.UserId == id);
+            if (!userExists)
+                return NotFound();
+            var userCDTO = mapper.Map<User>(us);
+            userCDTO.UserId = id;
+            userCDTO.RoleId = 2;
+            userCDTO.Password = BCrypt.Net.BCrypt.HashPassword(userCDTO.Password);
+            context.Users.Update(userCDTO);
             await context.SaveChangesAsync();
             return Ok(us);
         }

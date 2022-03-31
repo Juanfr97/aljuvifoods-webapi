@@ -12,19 +12,9 @@ namespace aljuvifoods_webapi.Repository
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
-
         public DbSet<Role> Roles { get; set; }
         public DbSet<Product> Products { get; set; }
 
-        //Config
-        protected override void OnModelCreating(ModelBuilder model)
-        {
-           // base.OnModelCreating(model);
-           // model.ApplyConfiguration(new OrderProductConfiguration());
-            model.Entity<OrderProduct>().HasKey(orp => new { orp.OrderId, orp.ProductId });
-            //model.Entity<Order>().HasMany(o => o.Products).WithOne(o => o.order);
-            model.Entity<OrderProduct>().HasOne(o=>o.order).WithOne().HasForeignKey<OrderProduct>(o=>o.OrderId);
-        }
 
     }
 }
