@@ -26,7 +26,8 @@ namespace aljuvifoods_webapi.Controllers
         {
             var orders = await context.Orders.Include(x => x.OrderUser)
                                              .ToListAsync();
-            return Ok(orders);
+            var response = new ResponseOrder() { Orders = orders,Total=orders.Count };
+            return Ok(response);
         }
         [HttpPost]
         public async Task<ActionResult> PostOrder([FromBody] OrderCDTO orderCDTO)

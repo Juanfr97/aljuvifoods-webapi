@@ -22,14 +22,10 @@ namespace aljuvifoods_webapi.DAO
             var query =
                 from u in _context.Users
                 join o in _context.Orders on u.UserId equals o.UserId
-                join op in _context.OrderProducts on o.Id equals op.OrderId
-                join p in _context.Products on op.ProductId equals p.ProductId
                 select new
                 {
                     userName = u.Name + ", " + u.LastName,
                     userAddress = u.Street + ", " + u.City,
-                    orderDesc = p.Description,
-                    orderAmo = op.Amount,
                     orderDat = o.OrderDate,
                     orderTot = o.OrderTotal,
                 };
@@ -40,8 +36,6 @@ namespace aljuvifoods_webapi.DAO
                 usr = order.userName;
                 auxOrder = $"Cliente : {usr}\n" +
                     $"Dirección : {order.userAddress}\n" +
-                    $"Ordern : {order.orderDesc}\n " +
-                    $"Cantidad : {order.orderAmo}\n  " +
                     $"Fecha pedido : {order.orderDat}\n Total : {order.orderTot}";
                 Console.WriteLine(auxOrder);
             }
